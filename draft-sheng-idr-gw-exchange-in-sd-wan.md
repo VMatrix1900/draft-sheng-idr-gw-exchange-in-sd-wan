@@ -35,7 +35,7 @@ author:
   street: Beiqing Road
   city: Beijing
   country: China
- - 
+ -
   ins: L. Dunbar
   name: Linda Dunbar
   organization: Futurewei
@@ -66,8 +66,8 @@ To interconnect geographically faraway branches or SASE resources, multi-segment
   ( | GW1 |---------------| GW3 |  )
   ( +--+--+               +--+--+  )
   (^^^^|^^^^^^^^^^^^^^^^^^^^^|^^^^^)
-       |                     |   
-    +--+--+               +--+--+ 
+       |                     |
+    +--+--+               +--+--+
     |CPE 1|               |CPE 2|
     +-----+               +-----+
 ~~~
@@ -80,7 +80,7 @@ To interconnect geographically faraway branches or SASE resources, multi-segment
 
 # Corresponding GW Sub-TLV
 
-Corresponding GW Sub-TLV within the Hybrid Underlay Tunnel UPDATE indicates the address of the corresponding GW. 
+Corresponding GW Sub-TLV within the Hybrid Underlay Tunnel UPDATE indicates the address of the corresponding GW.
 The following is the structure of the Corresponding GW Sub-TLV:
 
 ~~~
