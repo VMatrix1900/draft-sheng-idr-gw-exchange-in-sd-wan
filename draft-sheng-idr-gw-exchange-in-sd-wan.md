@@ -50,7 +50,10 @@ The document describes the control plane enhancement for multi-segment SD-WAN to
 
 # Introduction {#intro}
 
-To interconnect geographically faraway branches or SASE resources, multi-segment SD-WAN is often deployed via cloud backbone{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}}. As shown in {{Scenario}}, CPE 1 and CPE 2 are connected to the nearest Cloud GW in different regions. For the traffic from CPE 1 to CPE 2, the CPE 1 will encapsulate the address of the egress GW(GW3) and destination CPE(CPE2) in the dataplane(see {{Section 5.2 of I-D.draft-dmk-rtgwg-multisegment-sdwan}}). To accomplish that, CPE needs to know their peers' corresponding GW addresses. This document proposes an control plane enhancement based on {{!I-D.draft-ietf-idr-sdwan-edge-discovery}} to exchange the corresponding GW address between CPEs.
+{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} describes the enterprises utilizing Cloud Providers’ backbone to interconnect their branch offices. As shown in Figure 1, CPE-1 and CPE-2 are connected to their respective Cloud Gateways (GW) in different regions. CPE-1 and CPE-2 maintain the pairwise IPsec SAs. The IPsec encrypted traffic from CPE-1 to CPE-2 is encapsulated by the GENEVE header {{!RFC8926}}, with the outer destination address being the GW1. {{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to carry the information of the GWs of the destination branches, e.g., GW3 for CPE-2 and other attributes.
+
+To accomplish that, CPE-1 needs to know their peers' corresponding GW addresses. This document proposes a BGP extension based on {{!I-D.draft-ietf-idr-sdwan-edge-discovery}} for a CPE to advertise its directly connected GW address to other CPEs.
+
 
 ~~~
   (^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)
@@ -78,15 +81,29 @@ To interconnect geographically faraway branches or SASE resources, multi-segment
 
 {::boilerplate bcp14-tagged}
 
-# Corresponding GW Sub-TLV
+The following acronyms and terms are used in this document:
 
-Corresponding GW Sub-TLV within the Hybrid Underlay Tunnel UPDATE indicates the address of the corresponding GW.
+- Cloud DC: 	Off-Premises Data Center, managed by 3rd party, that hosts applications, services, and workload for different organizations or tenants.
+- CPE:        Customer (Edge) Premises Equipment.
+- OnPrem:		On Premises data centers and branch offices.
+- RR          Route Reflector.
+- SD-WAN: 		Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.
+- VPN         Virtual Private Network. 
+
+# Extension to SD-WAN Underlay UPDATE for Corresponding GWs
+
+The Client Routes Update is the same as described in {{Section 5 of I-D.draft-ietf-idr-sdwan-edge-discovery}}.
+
+## Corresponding GW Sub-TLV
+
+The Corresponding GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV (code point 25), carries the corresponding GW address(es) with which the SD-WAN edge is associated.
+
 The following is the structure of the Corresponding GW Sub-TLV:
 
 ~~~
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Type=TBD2 (C-GW  subTLV)     |  Length (2 Octets)            |
+   |   Type=TBD    |    length     |  reserved     |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    | Corresponding GW Addr Family  | Address                       |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ (variable)                    +
