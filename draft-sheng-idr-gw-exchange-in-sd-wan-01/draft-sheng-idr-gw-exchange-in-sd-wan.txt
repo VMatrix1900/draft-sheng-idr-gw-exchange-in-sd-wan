@@ -1,0 +1,222 @@
+
+
+
+
+Inter-Domain Routing                                            C. Sheng
+Internet-Draft                                               H. Shi, Ed.
+Intended status: Standards Track                                  Huawei
+Expires: 22 February 2024                                      L. Dunbar
+                                                               Futurewei
+                                                          21 August 2023
+
+
+         Corresponding Gateway Exchange in Multi-segment SD-WAN
+              draft-sheng-idr-gw-exchange-in-sd-wan-latest
+
+Abstract
+
+   The document describes the control plane enhancement for multi-
+   segment SD-WAN to exchange the corresponding GW information between
+   edges.
+
+Discussion Venues
+
+   This note is to be removed before publishing as an RFC.
+
+   Discussion of this document takes place on the Inter-Domain Routing
+   Working Group mailing list (idr@ietf.org), which is archived at
+   https://mailarchive.ietf.org/arch/browse/idr/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 22 February 2024.
+
+Copyright Notice
+
+   Copyright (c) 2023 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
+
+Table of Contents
+
+   1.  Introduction
+   2.  Requirements Language
+   3.  Extension to SD-WAN Underlay UPDATE for Corresponding GWs
+     3.1.  Corresponding GW Sub-TLV
+   4.  Security Considerations
+   5.  IANA Considerations
+   6.  Normative References
+   Authors' Addresses
+
+1.  Introduction
+
+   [I-D.draft-dmk-rtgwg-multisegment-sdwan] describes the enterprises
+   utilizing Cloud Providers’ backbone to interconnect their branch
+   offices.  As shown in Figure 1, CPE-1 and CPE-2 are connected to
+   their respective Cloud Gateways (GW) in different regions.  CPE-1 and
+   CPE-2 maintain the pairwise IPsec SAs.  The IPsec encrypted traffic
+   from CPE-1 to CPE-2 is encapsulated by the GENEVE header [RFC8926],
+   with the outer destination address being the GW1.
+   [I-D.draft-dmk-rtgwg-multisegment-sdwan] specifies a set of sub-TLVs
+   to carry the information of the GWs of the destination branches,
+   e.g., GW3 for CPE-2 and other attributes.
+
+   To accomplish that, CPE-1 needs to know their peers' corresponding GW
+   addresses.  This document proposes a BGP extension based on
+   [I-D.draft-ietf-idr-sdwan-edge-discovery] for a CPE to advertise its
+   directly connected GW address to other CPEs.
+
+     (^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)
+     (            Region2             )
+     (            +-----+             )
+     (            | GW2 |             )
+     (            +-----+             )
+     (           /       \            )
+     (          /  Cloud  \           )
+     (         /  Backbone \          )
+     ( Region1/             \Region3  )
+     ( +-----+               +-----+  )
+     ( | GW1 |---------------| GW3 |  )
+     ( +--+--+               +--+--+  )
+     (^^^^|^^^^^^^^^^^^^^^^^^^^^|^^^^^)
+          |                     |
+       +--+--+               +--+--+
+       |CPE 1|               |CPE 2|
+       +-----+               +-----+
+
+                       Figure 1: Multi-segment SD-WAN
+
+2.  Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+   The following acronyms and terms are used in this document:
+
+   *  Cloud DC: Off-Premises Data Center, managed by 3rd party, that
+      hosts applications, services, and workload for different
+      organizations or tenants.
+
+   *  CPE: Customer (Edge) Premises Equipment.
+
+   *  OnPrem: On Premises data centers and branch offices.
+
+   *  RR Route Reflector.
+
+   *  SD-WAN: Software Defined Wide Area Network.  In this document,
+      “SD-WAN” refers to a policy-driven transporting of IP packets over
+      multiple underlay networks for better WAN bandwidth management,
+      visibility, and control.
+
+   *  VPN Virtual Private Network.
+
+3.  Extension to SD-WAN Underlay UPDATE for Corresponding GWs
+
+   The Client Routes Update is the same as described in Section 5 of
+   [I-D.draft-ietf-idr-sdwan-edge-discovery].
+
+3.1.  Corresponding GW Sub-TLV
+
+   The Corresponding GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV
+   (code point 25), carries the corresponding GW address(es) with which
+   the SD-WAN edge is associated.
+
+   The following is the structure of the Corresponding GW Sub-TLV:
+
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |   Type=TBD    |    length     |  reserved     |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      | Corresponding GW Addr Family  | Address                       |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ (variable)                    +
+      ~                                                               ~
+      |             Corresponding GW Address                          |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+4.  Security Considerations
+
+   This document does not introduce any new security considerations.
+
+5.  IANA Considerations
+
+   TBD.
+
+6.  Normative References
+
+   [I-D.draft-dmk-rtgwg-multisegment-sdwan]
+              Majumdar, K., Dunbar, L., Kasiviswanathan, V., and A.
+              Ramchandra, "Multi-segment SD-WAN via Cloud DCs", Work in
+              Progress, Internet-Draft, draft-dmk-rtgwg-multisegment-
+              sdwan-00, 31 May 2023,
+              <https://datatracker.ietf.org/doc/html/draft-dmk-rtgwg-
+              multisegment-sdwan-00>.
+
+   [RFC8926]  Gross, J., Ed., Ganga, I., Ed., and T. Sridhar, Ed.,
+              "Geneve: Generic Network Virtualization Encapsulation",
+              RFC 8926, DOI 10.17487/RFC8926, November 2020,
+              <https://www.rfc-editor.org/rfc/rfc8926>.
+
+   [I-D.draft-ietf-idr-sdwan-edge-discovery]
+              Dunbar, L., Hares, S., Raszuk, R., Majumdar, K., Mishra,
+              G. S., and V. Kasiviswanathan, "BGP UPDATE for SD-WAN Edge
+              Discovery", Work in Progress, Internet-Draft, draft-ietf-
+              idr-sdwan-edge-discovery-10, 23 June 2023,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
+              sdwan-edge-discovery-10>.
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+Authors' Addresses
+
+   Cheng Sheng
+   Huawei
+   Beiqing Road
+   Beijing
+   Email: shengcheng@huawei.com
+
+
+   Hang Shi (editor)
+   Huawei
+   Beiqing Road
+   Beijing
+   China
+   Email: shihang9@huawei.com
+
+
+   Linda Dunbar
+   Futurewei
+   Email: linda.dunbar@futurewei.com
