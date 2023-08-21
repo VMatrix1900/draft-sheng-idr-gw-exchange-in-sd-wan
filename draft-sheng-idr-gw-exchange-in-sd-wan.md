@@ -88,7 +88,7 @@ The following acronyms and terms are used in this document:
 - OnPrem:		On Premises data centers and branch offices.
 - RR          Route Reflector.
 - SD-WAN: 		Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.
-- VPN         Virtual Private Network. 
+- VPN         Virtual Private Network.
 
 # Extension to SD-WAN Underlay UPDATE for Corresponding GWs
 
