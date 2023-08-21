@@ -1161,7 +1161,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.2.1" class="keepWithNext"><a href="#section-2" class="auto internal xref">2</a>.  <a href="#name-requirements-language" class="internal xref">Requirements Language</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3">
-            <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-corresponding-gw-sub-tlv" class="internal xref">Corresponding GW Sub-TLV</a></p>
+            <p id="section-toc.1-1.3.1"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-extension-to-sd-wan-underla" class="internal xref">Extension to SD-WAN Underlay UPDATE for Corresponding GWs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1">
+                <p id="section-toc.1-1.3.2.1.1" class="keepWithNext"><a href="#section-3.1" class="auto internal xref">3.1</a>.  <a href="#name-corresponding-gw-sub-tlv" class="internal xref">Corresponding GW Sub-TLV</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
             <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
@@ -1184,10 +1189,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">To interconnect geographically faraway branches or SASE resources, multi-segment SD-WAN is often deployed via cloud backbone<span>[<a href="#I-D.draft-dmk-rtgwg-multisegment-sdwan" class="cite xref">I-D.draft-dmk-rtgwg-multisegment-sdwan</a>]</span>. As shown in <a href="#Scenario" class="auto internal xref">Figure 1</a>, CPE 1 and CPE 2 are connected to the nearest Cloud GW in different regions. For the traffic from CPE 1 to CPE 2, the CPE 1 will encapsulate the address of the egress GW(GW3) and destination CPE(CPE2) in the dataplane(see <span><a href="https://datatracker.ietf.org/doc/html/draft-dmk-rtgwg-multisegment-sdwan-00#section-5.2" class="relref">Section 5.2</a> of [<a href="#I-D.draft-dmk-rtgwg-multisegment-sdwan" class="cite xref">I-D.draft-dmk-rtgwg-multisegment-sdwan</a>]</span>). To accomplish that, CPE needs to know their peers' corresponding GW addresses. This document proposes an control plane enhancement based on <span>[<a href="#I-D.draft-ietf-idr-sdwan-edge-discovery" class="cite xref">I-D.draft-ietf-idr-sdwan-edge-discovery</a>]</span> to exchange the corresponding GW address between CPEs.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1"><span>[<a href="#I-D.draft-dmk-rtgwg-multisegment-sdwan" class="cite xref">I-D.draft-dmk-rtgwg-multisegment-sdwan</a>]</span> describes the enterprises utilizing Cloud Providers’ backbone to interconnect their branch offices. As shown in Figure 1, CPE-1 and CPE-2 are connected to their respective Cloud Gateways (GW) in different regions. CPE-1 and CPE-2 maintain the pairwise IPsec SAs. The IPsec encrypted traffic from CPE-1 to CPE-2 is encapsulated by the GENEVE header <span>[<a href="#RFC8926" class="cite xref">RFC8926</a>]</span>, with the outer destination address being the GW1. <span>[<a href="#I-D.draft-dmk-rtgwg-multisegment-sdwan" class="cite xref">I-D.draft-dmk-rtgwg-multisegment-sdwan</a>]</span> specifies a set of sub-TLVs to carry the information of the GWs of the destination branches, e.g., GW3 for CPE-2 and other attributes.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">To accomplish that, CPE-1 needs to know their peers' corresponding GW addresses. This document proposes a BGP extension based on <span>[<a href="#I-D.draft-ietf-idr-sdwan-edge-discovery" class="cite xref">I-D.draft-ietf-idr-sdwan-edge-discovery</a>]</span> for a CPE to advertise its directly connected GW address to other CPEs.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <span id="name-multi-segment-sd-wan"></span><div id="Scenario">
 <figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="section-1-2.1">
+        <div class="alignLeft art-text artwork" id="section-1-3.1">
 <pre>
   (^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)
   (            Region2             )
@@ -1223,27 +1229,50 @@ svg :is([fill="white"], [fill^="#fff"]) {
 "<span class="bcp14">MAY</span>", and "<span class="bcp14">OPTIONAL</span>" in this document are to be interpreted as
 described in BCP 14 <span>[<a href="#RFC2119" class="cite xref">RFC2119</a>]</span> <span>[<a href="#RFC8174" class="cite xref">RFC8174</a>]</span> when, and only when, they
 appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">The following acronyms and terms are used in this document:<a href="#section-2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2-3.1">Cloud DC:     Off-Premises Data Center, managed by 3rd party, that hosts applications, services, and workload for different organizations or tenants.<a href="#section-2-3.1" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-3.2">CPE:        Customer (Edge) Premises Equipment.<a href="#section-2-3.2" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-3.3">OnPrem:               On Premises data centers and branch offices.<a href="#section-2-3.3" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-3.4">RR          Route Reflector.<a href="#section-2-3.4" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-3.5">SD-WAN:               Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.<a href="#section-2-3.5" class="pilcrow">¶</a>
+</li>
+        <li class="normal" id="section-2-3.6">VPN         Virtual Private Network.<a href="#section-2-3.6" class="pilcrow">¶</a>
+</li>
+      </ul>
 </section>
 </div>
-<div id="corresponding-gw-sub-tlv">
+<div id="extension-to-sd-wan-underlay-update-for-corresponding-gws">
 <section id="section-3">
-      <h2 id="name-corresponding-gw-sub-tlv">
-<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-corresponding-gw-sub-tlv" class="section-name selfRef">Corresponding GW Sub-TLV</a>
+      <h2 id="name-extension-to-sd-wan-underla">
+<a href="#section-3" class="section-number selfRef">3. </a><a href="#name-extension-to-sd-wan-underla" class="section-name selfRef">Extension to SD-WAN Underlay UPDATE for Corresponding GWs</a>
       </h2>
-<p id="section-3-1">Corresponding GW Sub-TLV within the Hybrid Underlay Tunnel UPDATE indicates the address of the corresponding GW.
-The following is the structure of the Corresponding GW Sub-TLV:<a href="#section-3-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3-2">
+<p id="section-3-1">The Client Routes Update is the same as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-idr-sdwan-edge-discovery-10#section-5" class="relref">Section 5</a> of [<a href="#I-D.draft-ietf-idr-sdwan-edge-discovery" class="cite xref">I-D.draft-ietf-idr-sdwan-edge-discovery</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
+<div id="corresponding-gw-sub-tlv">
+<section id="section-3.1">
+        <h3 id="name-corresponding-gw-sub-tlv">
+<a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-corresponding-gw-sub-tlv" class="section-name selfRef">Corresponding GW Sub-TLV</a>
+        </h3>
+<p id="section-3.1-1">The Corresponding GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV (code point 25), carries the corresponding GW address(es) with which the SD-WAN edge is associated.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-2">The following is the structure of the Corresponding GW Sub-TLV:<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.1-3">
 <pre>
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |  Type=TBD2 (C-GW  subTLV)     |  Length (2 Octets)            |
+   |   Type=TBD    |    length     |  reserved     |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
    | Corresponding GW Addr Family  | Address                       |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ (variable)                    +
    ~                                                               ~
    |             Corresponding GW Address                          |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-</pre><a href="#section-3-2" class="pilcrow">¶</a>
+</pre><a href="#section-3.1-3" class="pilcrow">¶</a>
+</div>
+</section>
 </div>
 </section>
 </div>
@@ -1271,6 +1300,10 @@ The following is the structure of the Corresponding GW Sub-TLV:<a href="#section
 <dt id="I-D.draft-dmk-rtgwg-multisegment-sdwan">[I-D.draft-dmk-rtgwg-multisegment-sdwan]</dt>
       <dd>
 <span class="refAuthor">Majumdar, K.</span>, <span class="refAuthor">Dunbar, L.</span>, <span class="refAuthor">Kasiviswanathan, V.</span>, and <span class="refAuthor">A. Ramchandra</span>, <span class="refTitle">"Multi-segment SD-WAN via Cloud DCs"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dmk-rtgwg-multisegment-sdwan-00</span>, <time datetime="2023-05-31" class="refDate">31 May 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dmk-rtgwg-multisegment-sdwan-00">https://datatracker.ietf.org/doc/html/draft-dmk-rtgwg-multisegment-sdwan-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8926">[RFC8926]</dt>
+      <dd>
+<span class="refAuthor">Gross, J., Ed.</span>, <span class="refAuthor">Ganga, I., Ed.</span>, and <span class="refAuthor">T. Sridhar, Ed.</span>, <span class="refTitle">"Geneve: Generic Network Virtualization Encapsulation"</span>, <span class="seriesInfo">RFC 8926</span>, <span class="seriesInfo">DOI 10.17487/RFC8926</span>, <time datetime="2020-11" class="refDate">November 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8926">https://www.rfc-editor.org/rfc/rfc8926</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-idr-sdwan-edge-discovery">[I-D.draft-ietf-idr-sdwan-edge-discovery]</dt>
       <dd>
