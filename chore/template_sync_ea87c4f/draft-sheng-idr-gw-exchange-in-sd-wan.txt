@@ -5,9 +5,9 @@
 Inter-Domain Routing                                            C. Sheng
 Internet-Draft                                               H. Shi, Ed.
 Intended status: Standards Track                                  Huawei
-Expires: 22 February 2024                                      L. Dunbar
+Expires: 16 August 2025                                        L. Dunbar
                                                                Futurewei
-                                                          21 August 2023
+                                                        12 February 2025
 
 
          Corresponding Gateway Exchange in Multi-segment SD-WAN
@@ -45,11 +45,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 February 2024.
+   This Internet-Draft will expire on 16 August 2025.
 
 Copyright Notice
 
-   Copyright (c) 2023 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -171,12 +171,12 @@ Table of Contents
 6.  Normative References
 
    [I-D.draft-dmk-rtgwg-multisegment-sdwan]
-              Majumdar, K., Dunbar, L., Kasiviswanathan, V., and A.
-              Ramchandra, "Multi-segment SD-WAN via Cloud DCs", Work in
-              Progress, Internet-Draft, draft-dmk-rtgwg-multisegment-
-              sdwan-00, 31 May 2023,
+              Majumdar, K., Dunbar, L., Kasiviswanathan, V., Ramchandra,
+              A., and A. Choudhary, "Multi-segment SD-WAN via Cloud
+              DCs", Work in Progress, Internet-Draft, draft-dmk-rtgwg-
+              multisegment-sdwan-07, 20 February 2024,
               <https://datatracker.ietf.org/doc/html/draft-dmk-rtgwg-
-              multisegment-sdwan-00>.
+              multisegment-sdwan-07>.
 
    [RFC8926]  Gross, J., Ed., Ganga, I., Ed., and T. Sridhar, Ed.,
               "Geneve: Generic Network Virtualization Encapsulation",
@@ -184,12 +184,12 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc8926>.
 
    [I-D.draft-ietf-idr-sdwan-edge-discovery]
-              Dunbar, L., Hares, S., Raszuk, R., Majumdar, K., Mishra,
-              G. S., and V. Kasiviswanathan, "BGP UPDATE for SD-WAN Edge
-              Discovery", Work in Progress, Internet-Draft, draft-ietf-
-              idr-sdwan-edge-discovery-10, 23 June 2023,
+              Dunbar, L., Hares, S., Majumdar, K., Raszuk, R., and V.
+              Kasiviswanathan, "BGP UPDATE for SD-WAN Edge Discovery",
+              Work in Progress, Internet-Draft, draft-ietf-idr-sdwan-
+              edge-discovery-21, 19 January 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
-              sdwan-edge-discovery-10>.
+              sdwan-edge-discovery-21>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
