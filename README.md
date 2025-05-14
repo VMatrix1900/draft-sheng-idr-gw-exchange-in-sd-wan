@@ -1,3 +1,5 @@
+<!-- regenerate: on (set to off if you edit this file) -->
+
 # Corresponding Gateway Exchange in Multi-segment SD-WAN
 
 This is the working area for the individual Internet-Draft, "Corresponding Gateway Exchange in Multi-segment SD-WAN".
