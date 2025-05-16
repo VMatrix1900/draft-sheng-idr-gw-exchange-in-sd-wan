@@ -31,11 +31,14 @@ author:
   name: Hang Shi
   organization: Huawei
   email: shihang9@huawei.com
-  role: editor
-  street: Beiqing Road
-  city: Beijing
   country: China
  -
+  ins: J. Dong
+  name: Jie Dong
+  organization: Huawei
+  email: jie.dong@huawei.com
+  country: China
+-
   ins: L. Dunbar
   name: Linda Dunbar
   organization: Futurewei
@@ -57,7 +60,7 @@ The document describes the control plane enhancement for multi-segment SD-WAN to
 
 {{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} describes how enterprises leverage Cloud Providers’ backbone infrastructure to interconnect their branch offices. As illustrated in Figure 1, CPE-1 and CPE-2 establish connections to their respective Cloud Gateways (GW) in distinct regions. CPE-1 and CPE-2 maintain the pairwise IPsec Security Associations (SAs). The IPsec encrypted traffic from CPE-1 to CPE-2 is encapsulated by the GENEVE header {{!RFC8926}}, with the outer destination address being the GW1.
 
-{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to convey information about the GWs associated with the destination branches, such as GW3 for CPE-2, along with additional attributes. To accomplish this, CPE-1 must be aware of the associated GW addresses of their peers. This document proposes a BGP extension based on {{!I-D.draft-ietf-idr-sdwan-edge-discovery}}, enabling a CPE to advertise its directly connected GW address to other CPEs.
+{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to convey information about the GWs associated with the destination branches, such as GW3 for CPE-2, along with additional attributes. To accomplish this, CPE-1 must be aware of the associated GW addresses of their peers. This document proposes a BGP extension building upon {{!I-D.draft-ietf-idr-sdwan-edge-discovery}}, enabling a CPE to advertise its directly connected GW address to other CPEs.
 
 
 ~~~
@@ -137,7 +140,7 @@ SD-WAN Node ID: The node's IPv4 or IPv6 address.
 
 The Associated GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV (code point 25), carries the associated GW address(es) with which the SD-WAN edge is associated.
 
-The following is the structure of the Associated GW Sub-TLV:
+The following is the structure of the associated GW Sub-TLV:
 
 ~~~
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
