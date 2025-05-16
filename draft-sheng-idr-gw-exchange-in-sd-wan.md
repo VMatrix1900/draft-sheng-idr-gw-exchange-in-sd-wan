@@ -5,7 +5,7 @@ submissionType: IETF
 ipr: trust200902
 lang: en
 
-title: Corresponding Gateway Exchange in Multi-segment SD-WAN
+title: Associated Gateway Exchange in Multi-segment SD-WAN
 abbrev: Gateway Info Exchange in SDWAN
 docname: draft-sheng-idr-gw-exchange-in-sd-wan-latest
 obsoletes:
@@ -50,9 +50,9 @@ The document describes the control plane enhancement for multi-segment SD-WAN to
 
 # Introduction {#intro}
 
-{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} describes the enterprises utilizing Cloud Providers’ backbone to interconnect their branch offices. As shown in Figure 1, CPE-1 and CPE-2 are connected to their respective Cloud Gateways (GW) in different regions. CPE-1 and CPE-2 maintain the pairwise IPsec SAs. The IPsec encrypted traffic from CPE-1 to CPE-2 is encapsulated by the GENEVE header {{!RFC8926}}, with the outer destination address being the GW1. {{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to carry the information of the GWs of the destination branches, e.g., GW3 for CPE-2 and other attributes.
+{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} describes how enterprises leverage Cloud Providers’ backbone infrastructure to interconnect their branch offices. As illustrated in Figure 1, CPE-1 and CPE-2 establish connections to their respective Cloud Gateways (GW) in distinct regions. CPE-1 and CPE-2 maintain the pairwise IPsec Security Associations (SAs). The IPsec encrypted traffic from CPE-1 to CPE-2 is encapsulated by the GENEVE header {{!RFC8926}}, with the outer destination address being the GW1. 
 
-To accomplish that, CPE-1 needs to know their peers' corresponding GW addresses. This document proposes a BGP extension based on {{!I-D.draft-ietf-idr-sdwan-edge-discovery}} for a CPE to advertise its directly connected GW address to other CPEs.
+{{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to convey information about the GWs associated with the destination branches, such as GW3 for CPE-2, along with additional attributes. To accomplish this, CPE-1 must be aware of the associated GW addresses of their peers. This document proposes a BGP extension based on {{!I-D.draft-ietf-idr-sdwan-edge-discovery}}, enabling a CPE to advertise its directly connected GW address to other CPEs.
 
 
 ~~~
@@ -90,27 +90,69 @@ The following acronyms and terms are used in this document:
 - SD-WAN: 		Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.
 - VPN         Virtual Private Network.
 
-# Extension to SD-WAN Underlay UPDATE for Corresponding GWs
+# Extension to SD-WAN Underlay UPDATE for Associated GWs
 
 The Client Routes Update is the same as described in {{Section 5 of I-D.draft-ietf-idr-sdwan-edge-discovery}}.
 
-## Corresponding GW Sub-TLV
+## NLRI SD-WAN SAFI Route Type For GW
 
-The Corresponding GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV (code point 25), carries the corresponding GW address(es) with which the SD-WAN edge is associated.
+Adding a new attribute (Associated-Gateway Sub-TLV) to the SD-WAN-Hybrid Tunnel Encoding which is included in the SD-WAN SAFI (=74) Underlay Tunnel Update:
 
-The following is the structure of the Corresponding GW Sub-TLV:
+~~~
++------------------+
+|    Route Type    | 2 octet
++------------------+
+|     Length       | 2 Octet
++------------------+
+|   Type Specific  |
+~ Value (Variable) ~
+|                  |
++------------------+
+~~~
+
+NLRI Route-Type = 2: For advertising the detailed properties of the transit gateways for the edge. The SD-WAN NLRI Route-Type =2 has the following encoding:
+
+~~~
++------------------+
+|  Route Type = 2  | 2 octet
++------------------+
+|     Length       | 2 Octet
++------------------+
+|   SD-WAN Color   | 4 octets
++------------------+
+|  SD-WAN-Node-ID  | 4 or 16 octets
++------------------+
+~~~
+
+SD-WAN-Color: To represent a group of tunnels that correlate with the Color-Extended-community included in a client route UPDATE. When multiple SD-WAN edges can reach a client route co-located at one site, the SD-WAN- Color can represent a group of tunnels terminated at those SD-WAN edges co-located at the site, which effectively represents the site.
+
+SD-WAN Node ID: The node's IPv4 or IPv6 address.
+
+## Associated GW Sub-TLV
+
+The Associated GW Sub-TLV, within the SD-WAN-Hybrid Tunnel TLV (code point 25), carries the associated GW address(es) with which the SD-WAN edge is associated.
+
+The following is the structure of the Associated GW Sub-TLV:
 
 ~~~
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   |   Type=TBD    |    length     |  reserved     |
+   |               Type=TBD    |    length     |  Priority         |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-   | Corresponding GW Addr Family  | Address                       |
+   | Associated GW Addr Family     | Address                       |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+ (variable)                    +
    ~                                                               ~
-   |             Corresponding GW Address                          |
+   |             Associated GW Address                             |
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~
+
+Priority (1-255) indicate the preference of the GW. The higher the value, the more preference is the GW.
+
+Priority = 0 represents that the connection exists but request Cloud Backbone not to choose the GW if possible.
+
+# Manageability Considerations
+
+Effective management of SD-WAN edge nodes and the exchange of associated cloud gateway information are critical aspects in ensuring a robust and scalable SD-WAN deployment.
 
 # Security Considerations
 
@@ -118,6 +160,8 @@ This document does not introduce any new security considerations.
 
 # IANA Considerations
 
-TBD.
+Need IANA to assign a new Sub-TLV Type under the SD-WAN-Hybrid Tunnel TLV.
+
+- SD-WAN Associated GW Sub-TLV.
 
 --- back
