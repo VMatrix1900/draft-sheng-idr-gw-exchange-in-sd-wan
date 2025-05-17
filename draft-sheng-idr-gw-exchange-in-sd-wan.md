@@ -63,7 +63,6 @@ The document describes the control plane enhancement for multi-segment SD-WAN to
 
 {{!I-D.draft-dmk-rtgwg-multisegment-sdwan}} specifies a set of sub-TLVs to convey information about the GWs associated with the destination branches, such as GW3 for CPE-2, along with additional attributes. To accomplish this, CPE-1 must be aware of the associated GW addresses of their peers. This document proposes a BGP extension building upon {{!I-D.draft-ietf-idr-sdwan-edge-discovery}}, enabling a CPE to advertise its directly connected GW address to other CPEs.
 
-
 ~~~
   (^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)
   (            Region2             )
@@ -85,19 +84,18 @@ The document describes the control plane enhancement for multi-segment SD-WAN to
 ~~~
 {: #Scenario  title="Multi-segment SD-WAN"}
 
-
 # Requirements Language
 
 {::boilerplate bcp14-tagged}
 
 The following acronyms and terms are used in this document:
 
-- Cloud DC: 	Off-Premises Data Center, managed by 3rd party, that hosts applications, services, and workload for different organizations or tenants.
-- CPE:        Customer (Edge) Premises Equipment.
-- OnPrem:		On Premises data centers and branch offices.
-- RR          Route Reflector.
-- SD-WAN: 		Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.
-- VPN         Virtual Private Network.
+- Cloud DC: Off-Premises Data Center, managed by 3rd party, that hosts applications, services, and workload for different organizations or tenants.
+- CPE: Customer (Edge) Premises Equipment.
+- OnPrem: On Premises data centers and branch offices.
+- RR: Route Reflector.
+- SD-WAN: Software Defined Wide Area Network. In this document, “SD-WAN” refers to a policy-driven transporting of IP packets over multiple underlay networks for better WAN bandwidth management, visibility, and control.
+- VPN: Virtual Private Network.
 
 # Extension to SD-WAN Underlay UPDATE for Associated GWs
 
