@@ -35,6 +35,7 @@ author:
  -
   ins: J. Dong
   name: Jie Dong
+  role: editor
   organization: Huawei
   email: jie.dong@huawei.com
   country: China
@@ -52,7 +53,7 @@ author:
 
 --- abstract
 
-The document describes the control plane enhancement for multi-segment SD-WAN to exchange the corresponding GW information between edges.
+The document describes the control plane enhancement for multi-segment SD-WAN to exchange the associated GW information between edges.
 
 --- middle
 
