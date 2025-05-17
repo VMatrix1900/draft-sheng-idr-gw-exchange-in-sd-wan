@@ -3,13 +3,14 @@
 
 
 Inter-Domain Routing                                            C. Sheng
-Internet-Draft                                               H. Shi, Ed.
-Intended status: Standards Track                                  Huawei
-Expires: 17 November 2025                                      L. Dunbar
+Internet-Draft                                                    H. Shi
+Intended status: Standards Track                            J. Dong, Ed.
+Expires: 18 November 2025                                         Huawei
+                                                               L. Dunbar
                                                                Futurewei
                                                                G. Mishra
                                                                  Verizon
-                                                             16 May 2025
+                                                             17 May 2025
 
 
           Associated Gateway Exchange in Multi-segment SD-WAN
@@ -18,7 +19,7 @@ Expires: 17 November 2025                                      L. Dunbar
 Abstract
 
    The document describes the control plane enhancement for multi-
-   segment SD-WAN to exchange the corresponding GW information between
+   segment SD-WAN to exchange the associated GW information between
    edges.
 
 Discussion Venues
@@ -47,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 November 2025.
+   This Internet-Draft will expire on 18 November 2025.
 
 Copyright Notice
 
@@ -92,8 +93,8 @@ Table of Contents
    branches, such as GW3 for CPE-2, along with additional attributes.
    To accomplish this, CPE-1 must be aware of the associated GW
    addresses of their peers.  This document proposes a BGP extension
-   based on [I-D.draft-ietf-idr-sdwan-edge-discovery], enabling a CPE to
-   advertise its directly connected GW address to other CPEs.
+   building upon [I-D.draft-ietf-idr-sdwan-edge-discovery], enabling a
+   CPE to advertise its directly connected GW address to other CPEs.
 
      (^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^)
      (            Region2             )
@@ -133,14 +134,14 @@ Table of Contents
 
    *  OnPrem: On Premises data centers and branch offices.
 
-   *  RR Route Reflector.
+   *  RR: Route Reflector.
 
    *  SD-WAN: Software Defined Wide Area Network.  In this document,
       “SD-WAN” refers to a policy-driven transporting of IP packets over
       multiple underlay networks for better WAN bandwidth management,
       visibility, and control.
 
-   *  VPN Virtual Private Network.
+   *  VPN: Virtual Private Network.
 
 3.  Extension to SD-WAN Underlay UPDATE for Associated GWs
 
@@ -192,7 +193,7 @@ Table of Contents
    point 25), carries the associated GW address(es) with which the SD-
    WAN edge is associated.
 
-   The following is the structure of the Associated GW Sub-TLV:
+   The following is the structure of the associated GW Sub-TLV:
 
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -268,12 +269,16 @@ Authors' Addresses
    Email: shengcheng@huawei.com
 
 
-   Hang Shi (editor)
+   Hang Shi
    Huawei
-   Beiqing Road
-   Beijing
    China
    Email: shihang9@huawei.com
+
+
+   Jie Dong (editor)
+   Huawei
+   China
+   Email: jie.dong@huawei.com
 
 
    Linda Dunbar
