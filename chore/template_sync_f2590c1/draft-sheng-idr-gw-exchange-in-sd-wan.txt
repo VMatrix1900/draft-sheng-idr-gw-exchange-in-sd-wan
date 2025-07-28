@@ -5,12 +5,12 @@
 Inter-Domain Routing                                            C. Sheng
 Internet-Draft                                                    H. Shi
 Intended status: Standards Track                            J. Dong, Ed.
-Expires: 4 December 2025                                          Huawei
+Expires: 29 January 2026                                          Huawei
                                                                L. Dunbar
                                                                Futurewei
                                                                G. Mishra
                                                                  Verizon
-                                                             2 June 2025
+                                                            28 July 2025
 
 
           Associated Gateway Exchange in Multi-segment SD-WAN
@@ -48,7 +48,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 December 2025.
+   This Internet-Draft will expire on 29 January 2026.
 
 Copyright Notice
 
@@ -247,9 +247,9 @@ Table of Contents
               Dunbar, L., Hares, S., Majumdar, K., Raszuk, R., and V.
               Kasiviswanathan, "BGP UPDATE for SD-WAN Edge Discovery",
               Work in Progress, Internet-Draft, draft-ietf-idr-sdwan-
-              edge-discovery-23, 23 May 2025,
+              edge-discovery-25, 22 July 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-idr-
-              sdwan-edge-discovery-23>.
+              sdwan-edge-discovery-25>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
