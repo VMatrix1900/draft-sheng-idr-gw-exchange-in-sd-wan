@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-15T02:56:04.367235+00:00",
+  "timestamp": "2026-02-17T02:47:54.820614+00:00",
   "repo": "VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan",
   "labels": [
     {
@@ -265,7 +265,7 @@
       "id": "PR_kwDOKJf9q86_R25Z",
       "title": "upstream merge template repository",
       "url": "https://github.com/VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan/pull/7",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "VMatrix1900",
       "authorAssociation": "OWNER",
       "assignees": [],
@@ -274,13 +274,49 @@
       ],
       "body": "Merge https://github.com/martinthomson/internet-draft-template 15c7c96",
       "createdAt": "2026-01-26T02:09:23Z",
-      "updatedAt": "2026-01-26T02:09:24Z",
+      "updatedAt": "2026-02-16T02:32:11Z",
       "baseRepository": "VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan",
       "baseRefName": "main",
       "baseRefOid": "b379a22c44a7e9cf8e054651608f96bf952e754f",
       "headRepository": "VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan",
       "headRefName": "chore/template_sync_15c7c96",
       "headRefOid": "8349fb48ba39017d833ebed567f7847d5d3ec9d2",
+      "closedAt": "2026-02-16T02:32:09Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "VMatrix1900",
+          "authorAssociation": "OWNER",
+          "body": "[actions-template-sync] :construction_worker: automatically closed because there is a new open PR",
+          "createdAt": "2026-02-16T02:32:09Z",
+          "updatedAt": "2026-02-16T02:32:09Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 8,
+      "id": "PR_kwDOKJf9q87D_I2x",
+      "title": "upstream merge template repository",
+      "url": "https://github.com/VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan/pull/8",
+      "state": "OPEN",
+      "author": "VMatrix1900",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [
+        "template_sync"
+      ],
+      "body": "Merge https://github.com/martinthomson/internet-draft-template 96c2a52",
+      "createdAt": "2026-02-16T02:32:12Z",
+      "updatedAt": "2026-02-16T02:32:13Z",
+      "baseRepository": "VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan",
+      "baseRefName": "main",
+      "baseRefOid": "b379a22c44a7e9cf8e054651608f96bf952e754f",
+      "headRepository": "VMatrix1900/draft-sheng-idr-gw-exchange-in-sd-wan",
+      "headRefName": "chore/template_sync_96c2a52",
+      "headRefOid": "36886c1ffcd4038bc1c09441661be33a85c0c917",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
